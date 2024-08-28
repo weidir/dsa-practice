@@ -1,4 +1,4 @@
-# Linked List
+# Singly Linked List
 
 class Node:
     """
