@@ -1,9 +1,7 @@
 
-
+# Overall time complexity: linear O(n log n)
 def quick_sort(values):
-    """
-    
-    """
+
     if len(values) <= 1:
         return values
     
@@ -14,6 +12,7 @@ def quick_sort(values):
     return merge(left_sorted, pivot_val, right_sorted)
 
 
+# Linear time complexity: O(log n)
 def pivot(values):
     
     if not values:
@@ -31,9 +30,8 @@ def pivot(values):
     
     return left, pivot_val, right
 
-
+# Linear time complexity: O(n)
 def merge(left: list, pivot_val: int, right: list):
-    print(f"Left: {left}, pivot: {pivot_val}, right: {right}")
 
     merged = left
     merged.append(pivot_val)
