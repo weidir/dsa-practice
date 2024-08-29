@@ -14,7 +14,7 @@ class Node:
         self.name = name
 
     def __repr__(self):
-        next_node = f"name: {self.next_node.name if self.next_node is not None else None}; data: {self.next_node.data if self.next_node is not None else None}"
+        next_node = f"name: {self.next_node.name}; data: {self.next_node.data}"  if self.next_node is not None else None # if self.next_node is not None else None
         return f"Node(name: {self.name}; data: {self.data}; next_node: {next_node})"
     
 
@@ -28,7 +28,7 @@ class LinkedList:
         self.tail = tail
     
     def __repr__(self):
-        str_value_list = [str(x) for x in self.values_to_list()]
+        str_value_list = [str(x) for x in self.values_to_list()] if self.head else []
         return f"LinkedList({'-> '.join(str_value_list)}) \nhead: {self.head}; tail: {self.tail}; size: {self.size()}"
 
     def empty(self):
@@ -52,7 +52,7 @@ class LinkedList:
                 node = node.next_node
             self.tail = node
         else:
-            return 0
+            return None
     
     # Constant time complexity: O(1)
     def prepend(self, node: Node):
@@ -61,12 +61,17 @@ class LinkedList:
 
     # Linear time complexity: O(n)
     def append(self, node: Node):
-        if self.tail is None:
-            self.find_tail()
-        self.tail.next_node = node
-        self.tail = node
+        if self.empty():
+            self.head = node
+            self.tail = node
+        else:
+            if self.tail is None:
+                self.find_tail()
+            self.tail.next_node = node
+            self.tail = node
     
     # Linear time complexity: O(n)
+    # Node(name: None; data: 25; next_node: name: None; data: 25)
     def values_to_list(self):
         if self.head is not None:
             node_value_list = []
@@ -100,7 +105,11 @@ class LinkedList:
     
     # Linear time complexity: O(n)
     def index(self, index):
+    
         if self.head is not None:
+            if index == 0:
+                return self.head
+            
             idx = 0
             node = self.head
 
@@ -139,7 +148,6 @@ class LinkedList:
             while node:
                 if node.data == value:
                     if idx == 0:
-                        print("Removing head node")
                         self.head = node.next_node
                     else:
                         prev_node.next_node = node.next_node
