@@ -10,6 +10,7 @@ sys.path.insert(0, os.getcwd())
 # Import LinkedList implementation
 from structs.linked_list import LinkedList, Node
 
+# Runs in (kn log n) time
 def merge_sort(linked_list: LinkedList) -> LinkedList:
 
     if linked_list.size() <= 1:
@@ -21,7 +22,7 @@ def merge_sort(linked_list: LinkedList) -> LinkedList:
 
     return merge(left, right)
 
-# Linear time complexity: O(n)
+# Quasi logarithmic time complexity: O(k log n)
 def split(linked_list: LinkedList) -> Tuple[LinkedList]:
 
     if linked_list is None or linked_list.head is None:
@@ -37,7 +38,7 @@ def split(linked_list: LinkedList) -> Tuple[LinkedList]:
 
     return left, right
 
-
+# Runs in linear time: O(n)
 def merge(left_ll: LinkedList, right_ll: LinkedList) -> LinkedList:
 
     merged = LinkedList()
