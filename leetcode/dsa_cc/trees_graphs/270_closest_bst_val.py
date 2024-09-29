@@ -21,17 +21,18 @@ class Solution:
             if not root:
                 return
             
+            # Logic to update closest value
             current_dist = abs(target - root.val)
-            
             if current_dist < self.closest_dist:
                 self.closest_dist = current_dist
                 self.closest = root.val
             elif current_dist == self.closest_dist:
                 self.closest = min(root.val, self.closest)
             
-            if root.left:
+            # Logic to traverse binary search tree
+            if root.left and target < root.val:
                 dfs_close_helper(root.left, target)
-            if root.right:
+            elif root.right and target > root.val:
                 dfs_close_helper(root.right, target)
 
             return self.closest
