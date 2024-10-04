@@ -7,6 +7,9 @@ class Solution:
         n = len(grid)
         graph = defaultdict(list)
 
+        if n == 0:
+            return 0
+
         # Create an adjacency mapping from the grid
         for i in range(n):
             for j in range(n):
@@ -28,23 +31,23 @@ class Solution:
                     if i > 0 and j > 0 and grid[i-1][j-1] == 0:
                         graph[(i, j)].append((i-1, j-1)) # Up left
 
-        queue = deque([(0, 0)])
         self.shortest = 1
 
         # BFS
-        def bfs(queue):
+        def bfs(node):
+
+            queue = deque([node])
+            num_nds_lvl = len(queue)
 
             while queue:
-                for node in queue:
-                    
-                    if node == (n-1, n-1):
-                        return self.shortest
-                    
-                    queue.append(node)
-            
+
+                for nd in queue:
+                    pass
+
+                            
             return -1
 
-        return bfs(queue)
+        return bfs((0,0))
 
 
 if __name__ == "__main__":
