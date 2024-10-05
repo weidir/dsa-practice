@@ -13,7 +13,7 @@ class Solution:
         
         # Create an adjacency matrix graph
         graph = defaultdict(list)
-        def bfs_tr(root):
+        def bfs_tree(root):
 
             queue = deque([root])
 
@@ -35,34 +35,37 @@ class Solution:
                         graph[node.right.val].append(node.val)
                         queue.append(node.right)
         
-        bfs_tr(root)
+        bfs_tree(root)
+
+        if target.val not in graph:
+            return []
 
         # Perform BFS on the new graph
         self.distance = 0
-        self.seen = set()
-        def bfs_gr(target):
+        seen = set()
+        def bfs_graph(target: TreeNode):
 
-            queue = deque([target])
+            queue = deque([target.val])
 
             while queue:
+
+                if self.distance == k:
+                    return list(queue)
                 
                 for _ in range(len(queue)):
 
                     node = queue.popleft()
-                    self.seen.add(node)
+                    seen.add(node)
 
                     for neighbor in graph[node]:
-                        if neighbor not in self.seen:
+                        if neighbor not in seen:
                             queue.append(neighbor)
                 
                 self.distance += 1
-
-                if self.distance == k:
-                    return list(queue)
             
             return []
         
-        return bfs_gr(target)
+        return bfs_graph(target)
 
 
 if __name__ == "__main__":
@@ -87,13 +90,29 @@ if __name__ == "__main__":
     N3.left = N6
     N3.right = N7
 
-    target1 = 5
+    target1 = TreeNode(5)
     k1 = 2
     ans1 = sol.distanceK(N1, target1, k1)
     print(ans1)
 
     N10 = TreeNode(1)
-    target2 = 1
+    target2 = TreeNode(1)
     k2 = 3
     ans2 = sol.distanceK(N10, target2, k2)
     print(ans2)
+
+    N11 = TreeNode(0)
+    N12 = TreeNode(1)
+    N13 = TreeNode(2)
+    N14 = TreeNode(3)
+    N15 = TreeNode(4)
+
+    N11.left = N12
+    N12.right = N13
+    N13.right = N14
+    N14.right = N15
+
+    target3 = TreeNode(3)
+    k3 = 0
+    ans3 = sol.distanceK(N11, target3, k3)
+    print(ans3)
