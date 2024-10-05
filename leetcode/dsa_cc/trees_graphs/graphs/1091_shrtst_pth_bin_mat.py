@@ -7,8 +7,8 @@ class Solution:
         n = len(grid)
         graph = defaultdict(list)
 
-        if n == 0:
-            return 0
+        if n == 0 or grid[0][0] != 0:
+            return -1
 
         # Create an adjacency mapping from the grid
         for i in range(n):
@@ -31,20 +31,33 @@ class Solution:
                     if i > 0 and j > 0 and grid[i-1][j-1] == 0:
                         graph[(i, j)].append((i-1, j-1)) # Up left
 
-        self.shortest = 1
+        self.shortest = 0
+        self.seen = set()
 
         # BFS
         def bfs(node):
 
             queue = deque([node])
-            num_nds_lvl = len(queue)
 
             while queue:
 
-                for nd in queue:
-                    pass
+                self.shortest += 1
 
-                            
+                num_nds_lvl = len(queue)
+
+                for _ in range(num_nds_lvl):
+
+                    node = queue.popleft()
+
+                    if node not in self.seen:
+                        self.seen.add(node)
+
+                        if node == (n - 1, n - 1):
+                            return self.shortest
+
+                        if node in graph:
+                            queue.extend(graph[node])
+                                            
             return -1
 
         return bfs((0,0))
@@ -64,3 +77,11 @@ if __name__ == "__main__":
     grid3 = [[1,0,0],[1,1,0],[1,1,0]]
     ans3 = sol.shortestPathBinaryMatrix(grid3)
     print(ans3)
+
+    grid4 = [
+        [0,0,0],
+        [1,1,0],
+        [1,1,1]
+    ]
+    ans4 = sol.shortestPathBinaryMatrix(grid4)
+    print(ans4)
